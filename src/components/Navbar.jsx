@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import logo from "../../public/logo.png";
 
 export default function Navbar() {
@@ -10,9 +11,9 @@ export default function Navbar() {
 
   return (
     <nav className="flex items-center justify-between sm:px-4 px-5">
-      <a href="/">
+      <Link to="/">
         <img src={logo} alt="logo image" className="w-25 h-22" />
-      </a>
+      </Link>
       {/* Mobile navbar */}
       <div className="md:hidden">
         <button onClick={() => toggleMenu()}>{menuOpen ? "X" : "☰"}</button>
@@ -25,25 +26,25 @@ export default function Navbar() {
         }`}
       >
         <li className="p-3 bg-black/20 font-semibold rounded-4xl hover:bg-black/30 cursor-pointer">
-          <a href="/">Home</a>
+          <Link to="/">Home</Link>
         </li>
         <li className="p-3 bg-black/20 rounded-4xl font-semibold hover:bg-black/30 cursor-pointer">
-          <a href="/">About</a>
+          <Link to="/">About</Link>
         </li>
         <li className="p-3 bg-black/20 rounded-4xl font-semibold hover:bg-black/30 cursor-pointer">
-          <a href="/">Services</a>
+          <Link to="/">Services</Link>
         </li>
         <li className="p-3 bg-black/20 rounded-4xl font-semibold hover:bg-black/30 cursor-pointer">
-          <a href="/">Menu</a>
+          <Link to="/menu">Menu</Link>
         </li>
         <li className="p-3 bg-black/20 rounded-4xl font-semibold hover:bg-black/30 cursor-pointer">
-          <a href="/">Reservations</a>
+          <Link to="/booking">Reservations</Link>
         </li>
         <li className="p-3 bg-black/20 rounded-4xl font-semibold hover:bg-black/30 cursor-pointer">
-          <a href="/">Order Online</a>
+          <Link to="/">Order Online</Link>
         </li>
         <li className="p-3 bg-black/20 rounded-4xl font-semibold hover:bg-black/30 cursor-pointer">
-          <a href="/">Login</a>
+          <Link to="/">Login</Link>
         </li>
       </ul>
     </nav>
