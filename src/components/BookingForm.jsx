@@ -8,6 +8,8 @@ export default function BookingForm({ availableTimes, dispatch, submitForm }) {
     occasion: "",
   });
 
+  const [errors, setErrors] = useState({});
+
   // Fallback times if availableTimes is not provided
   const defaultTimes = [
     "17:00",
@@ -54,6 +56,7 @@ export default function BookingForm({ availableTimes, dispatch, submitForm }) {
       newErrors.occasion = "Please select an occasion";
     }
 
+    setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
@@ -62,6 +65,14 @@ export default function BookingForm({ availableTimes, dispatch, submitForm }) {
       ...prev,
       [field]: value,
     }));
+
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors((prev) => ({
+        ...prev,
+        [field]: "",
+      }));
+    }
 
     // Dispatch date changes for available times
     if (field === "date" && dispatch) {
@@ -88,6 +99,7 @@ export default function BookingForm({ availableTimes, dispatch, submitForm }) {
         guests: "",
         occasion: "",
       });
+      setErrors({});
     } catch (error) {
       console.error("Booking submission failed:", error);
     }
@@ -129,6 +141,9 @@ export default function BookingForm({ availableTimes, dispatch, submitForm }) {
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
               required
             />
+            {errors.date && (
+              <p className="text-red-500 text-sm mt-1">{errors.date}</p>
+            )}
           </div>
 
           {/* Time Selection */}
@@ -145,7 +160,6 @@ export default function BookingForm({ availableTimes, dispatch, submitForm }) {
               value={formData.time}
               onChange={(e) => handleInputChange("time", e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-              required
             >
               <option value="">Select a time</option>
               {timeOptions.map((time, index) => (
@@ -154,6 +168,9 @@ export default function BookingForm({ availableTimes, dispatch, submitForm }) {
                 </option>
               ))}
             </select>
+            {errors.time && (
+              <p className="text-red-500 text-sm mt-1">{errors.time}</p>
+            )}
           </div>
 
           {/* Number of Guests */}
@@ -174,11 +191,13 @@ export default function BookingForm({ availableTimes, dispatch, submitForm }) {
               onChange={(e) => handleInputChange("guests", e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
               placeholder="1-10 guests"
-              required
             />
+            {errors.guests && (
+              <p className="text-red-500 text-sm mt-1">{errors.guests}</p>
+            )}
           </div>
 
-          {/* Occasion */}
+          {/* Occasion Selection */}
           <div className="space-y-2">
             <label
               htmlFor="occasion"
@@ -192,7 +211,6 @@ export default function BookingForm({ availableTimes, dispatch, submitForm }) {
               value={formData.occasion}
               onChange={(e) => handleInputChange("occasion", e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-              required
             >
               <option value="">Select an occasion</option>
               {occasions.map((occasion) => (
@@ -201,6 +219,9 @@ export default function BookingForm({ availableTimes, dispatch, submitForm }) {
                 </option>
               ))}
             </select>
+            {errors.occasion && (
+              <p className="text-red-500 text-sm mt-1">{errors.occasion}</p>
+            )}
           </div>
 
           {/* Submit Button */}
